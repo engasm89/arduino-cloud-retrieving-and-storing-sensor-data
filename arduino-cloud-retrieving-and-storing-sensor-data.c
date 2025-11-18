@@ -16,6 +16,10 @@ void app_main(void) { // Entry
     esp_mqtt_client_publish(client, "/ashraf/esp32/sensor", payload, 0, 1, 0); // Publish
     ESP_LOGI(TAG, "Published: %s", payload); // Log
     vTaskDelay(pdMS_TO_TICKS(2000)); // 2s delay
+    if (value % 5 == 0) { // Every 5th sample
+      ESP_LOGI(TAG, "Subscribing and reading back state"); // Log
+      esp_mqtt_client_subscribe(client, "/ashraf/esp32/cmd", 1); // Subscribe to commands
+    } // End periodic subscribe
   } // End loop
 } // End app_main
 
